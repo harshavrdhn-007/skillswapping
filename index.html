@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SkillSwap - Learn Together, Grow Together" />
+  <title>SkillSwap — Learn Together, Grow Together</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status"></div>
+  <div id="app">
+    <header class="topbar">
+      <a class="brand" href="#" data-view="home"><span class="brand-mark">S</span><span>Skill<span class="brand-accent">Swap</span></span></a>
+      <nav id="main-nav" class="main-nav">
+        <button class="nav-link active" data-view="home">Home</button>
+        <button class="nav-link" data-view="explore">Explore students</button>
+        <button class="nav-link auth-only hidden" data-view="dashboard">Dashboard</button>
+        <button class="nav-link auth-only hidden" data-view="requests">Requests <span id="request-badge" class="nav-badge hidden">0</span></button>
+      </nav>
+      <div class="nav-actions">
+        <button id="login-nav" class="btn btn-ghost" data-view="login">Log in</button>
+        <button id="register-nav" class="btn btn-primary" data-view="register">Get started</button>
+        <div id="user-menu" class="user-menu hidden">
+          <button id="user-menu-button" class="avatar avatar-small" aria-label="Open profile menu">U</button>
+          <div id="user-dropdown" class="dropdown hidden">
+            <button data-view="profile">My profile</button>
+            <button data-view="dashboard">Dashboard</button>
+            <button id="logout-button" class="danger-text">Log out</button>
+          </div>
+        </div>
+        <button id="mobile-menu" class="mobile-menu" aria-label="Toggle navigation">☰</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="view-home" class="view">
+        <div class="hero container">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> A community built on sharing knowledge</div>
+            <h1>Learn a skill.<br><span class="gradient-text">Teach a skill.</span><br>Grow together.</h1>
+            <p class="hero-description">Connect with students who know what you want to learn — and share what you already know. Your next learning partner is one conversation away.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary btn-large" data-view="register">Create free account <span>→</span></button>
+              <button class="btn btn-outline btn-large" data-view="explore">Explore students</button>
+            </div>
+            <div class="hero-proof"><div class="proof-avatars"><span>J</span><span>A</span><span>M</span><span>R</span></div><span>Learn from peers. Share what you know.</span></div>
+          </div>
+          <div class="hero-visual">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="floating-card card-code"><span class="float-icon purple">⌘</span><div><strong>Java</strong><small>Can teach</small></div><span class="mini-check">✓</span></div>
+            <div class="floating-card card-design"><span class="float-icon orange">✦</span><div><strong>UI Design</strong><small>Wants to learn</small></div></div>
+            <div class="swap-circle"><div class="swap-inner"><span>↗</span><span class="swap-divider"></span><span>↙</span></div><small>SKILL<br>EXCHANGE</small></div>
+            <div class="floating-card card-python"><span class="float-icon green">Py</span><div><strong>Python</strong><small>Can teach</small></div><span class="mini-check">✓</span></div>
+            <div class="floating-card card-team"><span class="float-icon blue">◎</span><div><strong>Real connections</strong><small>Learn together</small></div></div>
+            <div class="visual-caption">Knowledge grows when it is shared.</div>
+          </div>
+        </div>
+        <section class="steps-section">
+          <div class="container">
+            <div class="section-heading"><span class="eyebrow">HOW IT WORKS</span><h2>Three steps to your next skill</h2><p>SkillSwap makes peer-to-peer learning simple.</p></div>
+            <div class="steps-grid">
+              <article class="step-card"><span class="step-number">01</span><div class="step-icon lavender">♙</div><h3>Create your profile</h3><p>Tell the community what you can teach and what you are excited to learn.</p></article>
+              <article class="step-card"><span class="step-number">02</span><div class="step-icon peach">⌕</div><h3>Find your match</h3><p>Explore student profiles and search for the exact skill you want to learn.</p></article>
+              <article class="step-card"><span class="step-number">03</span><div class="step-icon mint">⇄</div><h3>Connect and exchange</h3><p>Send a request, get accepted, and start learning from each other.</p></article>
+            </div>
+          </div>
+        </section>
+        <section class="bottom-cta container"><div><span class="eyebrow">YOUR SKILLS HAVE VALUE</span><h2>Someone knows what you want to learn.<br>Someone wants to learn what you know.</h2></div><button class="btn btn-primary btn-large" data-view="register">Join SkillSwap →</button></section>
+      </section>
+
+      <section id="view-login" class="view hidden">
+        <div class="auth-layout container"><div class="auth-aside"><span class="eyebrow">WELCOME BACK</span><h1>Your next skill<br>starts here.</h1><p>Pick up where you left off. Your learning community is waiting.</p><div class="auth-quote">“The beautiful thing about learning is nobody can take it away from you.”<small>— B.B. King</small></div></div>
+          <form id="login-form" class="auth-card"><div class="form-heading"><span class="brand-mark">S</span><h2>Welcome back</h2><p>Log in to your SkillSwap account.</p></div><label>Email address<input name="email" type="email" placeholder="you@example.com" required autocomplete="email"></label><label>Password<input name="password" type="password" placeholder="Enter your password" required autocomplete="current-password"></label><button class="btn btn-primary btn-full" type="submit">Log in</button><p class="form-foot">New to SkillSwap? <button type="button" class="text-button" data-view="register">Create an account</button></p></form>
+        </div>
+      </section>
+
+      <section id="view-register" class="view hidden">
+        <div class="auth-layout container"><div class="auth-aside"><span class="eyebrow">JOIN THE COMMUNITY</span><h1>Share what you know.<br><span class="gradient-text">Discover what's next.</span></h1><p>Create your free profile and meet students who are ready to learn together.</p><div class="auth-benefits"><span>✓ Build your skill profile</span><span>✓ Find peer learning partners</span><span>✓ Exchange knowledge for free</span></div></div>
+          <form id="register-form" class="auth-card"><div class="form-heading"><span class="brand-mark">S</span><h2>Create your account</h2><p>It only takes a minute to get started.</p></div><div class="form-two"><label>Full name<input name="name" placeholder="Your name" required minlength="2" maxlength="60" autocomplete="name"></label><label>College / university<input name="college" placeholder="Your college" maxlength="100"></label></div><label>Email address<input name="email" type="email" placeholder="you@example.com" required autocomplete="email"></label><label>Password<input name="password" type="password" placeholder="At least 6 characters" required minlength="6" autocomplete="new-password"></label><button class="btn btn-primary btn-full" type="submit">Create account</button><p class="form-foot">Already have an account? <button type="button" class="text-button" data-view="login">Log in</button></p></form>
+        </div>
+      </section>
+
+      <section id="view-dashboard" class="view hidden"><div class="container page-container"><div class="page-title-row"><div><span class="eyebrow">YOUR SPACE</span><h1>Dashboard</h1><p class="muted">Your learning journey at a glance.</p></div><button class="btn btn-primary" data-view="profile">Edit my profile ↗</button></div><div id="dashboard-content"></div></div></section>
+
+      <section id="view-profile" class="view hidden"><div class="container page-container narrow-container"><div class="page-title-row"><div><span class="eyebrow">YOUR IDENTITY</span><h1>My profile</h1><p class="muted">Help other students understand what you can share.</p></div></div><form id="profile-form" class="panel profile-form"><div class="profile-form-top"><div id="profile-avatar-preview" class="avatar avatar-large">U</div><div><h3>Profile details</h3><p class="muted">Your name and learning interests.</p></div></div><div class="form-two"><label>Full name<input name="name" required maxlength="60"></label><label>College / university<input name="college" maxlength="100" placeholder="Your college"></label></div><div class="form-two"><label>Department<input name="department" maxlength="80" placeholder="e.g. Computer Science"></label><label>Year of study<select name="year"><option value="">Select year</option><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>Graduate</option></select></label></div><label>About me<textarea name="bio" rows="3" maxlength="500" placeholder="A little about yourself, your interests and learning goals..."></textarea></label><div class="form-two skill-inputs"><label>Skills I can teach <small>Separate skills with commas</small><input name="teachSkills" placeholder="Java, C, HTML, CSS"></label><label>Skills I want to learn <small>Separate skills with commas</small><input name="learnSkills" placeholder="Python, React, SQL"></label></div><label>Preferred contact email<input name="contactEmail" type="email" placeholder="Optional — defaults to your account email"></label><p class="small muted">Your account email is not shown publicly. Your preferred contact email is visible only to accepted exchange partners.</p><button class="btn btn-primary" type="submit">Save profile</button></form></div></section>
+
+      <section id="view-explore" class="view hidden"><div class="container page-container"><div class="page-title-row"><div><span class="eyebrow">LEARN FROM EACH OTHER</span><h1>Explore students</h1><p class="muted">Find someone who can teach what you want to learn.</p></div></div><div class="search-panel"><div class="search-box"><span>⌕</span><input id="student-search" placeholder="Search by name, college or skill..."></div><select id="skill-filter"><option value="">All skills</option><option>C</option><option>C++</option><option>Java</option><option>Python</option><option>JavaScript</option><option>HTML</option><option>CSS</option><option>React</option><option>SQL</option><option>Data Structures</option><option>Machine Learning</option></select></div><div id="students-grid" class="students-grid"><div class="loading-state">Loading students...</div></div></div></section>
+
+      <section id="view-requests" class="view hidden"><div class="container page-container"><div class="page-title-row"><div><span class="eyebrow">MAKE THE CONNECTION</span><h1>Exchange requests</h1><p class="muted">Manage the learning connections coming your way.</p></div></div><div class="tabs"><button class="tab-button active" data-request-tab="received">Received</button><button class="tab-button" data-request-tab="sent">Sent</button><button class="tab-button" data-request-tab="accepted">Accepted</button></div><div id="requests-list"></div></div></section>
+
+      <section id="view-contact" class="view hidden"><div class="container page-container"><div class="page-title-row"><div><span class="eyebrow">LEARNING PARTNERS</span><h1>Your connections</h1><p class="muted">Contact students whose exchange requests have been accepted.</p></div></div><div id="contacts-list" class="students-grid"></div></div></section>
+    </main>
+    <footer class="footer"><div class="container footer-inner"><a class="brand" href="#" data-view="home"><span class="brand-mark">S</span><span>Skill<span class="brand-accent">Swap</span></span></a><span>Learn Together, Grow Together.</span><span>© 2026 SkillSwap</span></div></footer>
+  </div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

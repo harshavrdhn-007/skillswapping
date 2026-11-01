@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isSelf(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    match /users/{uid} {
+      // Profiles are public to signed-in users so students can discover each other.
+      allow read: if signedIn();
+      allow create: if isSelf(uid)
+        && request.resource.data.uid == request.auth.uid;
+      allow update: if isSelf(uid)
+        && request.resource.data.uid == resource.data.uid;
+      allow delete: if isSelf(uid);
+    }
+
+    match /requests/{requestId} {
+      allow read: if signedIn()
+        && (resource.data.senderId == request.auth.uid
+          || resource.data.receiverId == request.auth.uid);
+
+      allow create: if signedIn()
+        && request.resource.data.senderId == request.auth.uid
+        && request.resource.data.receiverId is string
+        && request.resource.data.receiverId != request.auth.uid
+        && request.resource.data.status == "pending"
+        && request.resource.data.senderName is string
+        && request.resource.data.receiverName is string;
+
+      // Recipient may accept/reject; sender may cancel their own pending request.
+      allow update: if signedIn()
+        && (
+          (resource.data.receiverId == request.auth.uid
+            && resource.data.status == "pending"
+            && request.resource.data.status in ["accepted", "rejected"]
+            && request.resource.data.senderId == resource.data.senderId
+            && request.resource.data.receiverId == resource.data.receiverId)
+          ||
+          (resource.data.senderId == request.auth.uid
+            && resource.data.status == "pending"
+            && request.resource.data.status == "cancelled"
+            && request.resource.data.senderId == resource.data.senderId
+            && request.resource.data.receiverId == resource.data.receiverId)
+        );
+      allow delete: if false;
+    }
+  }
+}
