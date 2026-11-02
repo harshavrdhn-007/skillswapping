@@ -148,6 +148,18 @@ async function loadStudents() {
   } catch(error){grid.innerHTML='<div class="empty-state"><strong>Could not load students</strong>Check your Firestore database and security rules.</div>';console.error(error);}
 }
 let cachedStudents=[];
+function getSkillMatchPercentage(student) {
+  const normalizeSkills=skills=>new Set((Array.isArray(skills)?skills:[]).map(skill=>String(skill).trim().toLowerCase()).filter(Boolean));
+  const myTeach=normalizeSkills(currentProfile?.teachSkills);
+  const myLearn=normalizeSkills(currentProfile?.learnSkills);
+  const theirTeach=normalizeSkills(student.teachSkills);
+  const theirLearn=normalizeSkills(student.learnSkills);
+  const learningGoals=myLearn.size+theirLearn.size;
+  if(!learningGoals)return 0;
+  const matchedGoals=[...myLearn].filter(skill=>theirTeach.has(skill)).length
+    +[...theirLearn].filter(skill=>myTeach.has(skill)).length;
+  return Math.round(matchedGoals/learningGoals*100);
+}
 function renderStudentCards(students) {
   cachedStudents=students;
   const search=$("#student-search").value.trim().toLowerCase();
@@ -161,9 +173,10 @@ function renderStudentCards(students) {
   if(!filtered.length){grid.innerHTML='<div class="empty-state"><strong>No students found yet</strong>Try another search or check back later.</div>';return;}
   grid.innerHTML=filtered.map(p=>{
     const teach=(p.teachSkills||[]),learn=(p.learnSkills||[]);
+    const matchPercentage=getSkillMatchPercentage(p);
     const alreadySent=false;
     return `<article class="student-card">
-      <div class="student-head"><div class="avatar">${escapeHTML(initials(p.name))}</div><div><h3>${escapeHTML(p.name||"Student")}</h3><p>${escapeHTML([p.department,p.year].filter(Boolean).join(" · ")||p.college||"SkillSwap student")}</p></div></div>
+      <div class="student-head"><div class="avatar">${escapeHTML(initials(p.name))}</div><div><h3>${escapeHTML(p.name||"Student")}</h3><p>${escapeHTML([p.department,p.year].filter(Boolean).join(" · ")||p.college||"SkillSwap student")}</p></div><span class="match-badge" title="Based on both students' learning goals and teaching skills">${matchPercentage}% match</span></div>
       ${p.college?`<p class="muted small">${escapeHTML(p.college)}</p>`:""}
       <p class="student-bio">${escapeHTML(p.bio||"Ready to share knowledge and learn something new.")}</p>
       <div class="skill-label">Can teach</div><div class="chips">${teach.length?teach.slice(0,6).map(s=>`<span class="chip">${escapeHTML(s)}</span>`).join(""):'<span class="small muted">Not added yet</span>'}</div>
