@@ -185,7 +185,9 @@ function renderStudentCards(students) {
     </article>`;
   }).join("");
   grid.querySelectorAll("[data-request-to]").forEach(btn=>btn.addEventListener("click",()=>sendRequest(btn.dataset.requestTo,btn)));
-  grid.querySelectorAll("[data-student-view]").forEach(btn=>btn.addEventListener("click",()=>{
+  grid.querySelectorAll("[data-student-view]").forEach(btn=>btn.addEventListener("click",event=>{
+    event.preventDefault();
+    event.stopPropagation();
     if(currentUser)showStudentDetails(btn.dataset.studentView);
     else navigate("login");
   }));
