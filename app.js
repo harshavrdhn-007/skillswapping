@@ -181,11 +181,14 @@ function renderStudentCards(students) {
       <p class="student-bio">${escapeHTML(p.bio||"Ready to share knowledge and learn something new.")}</p>
       <div class="skill-label">Can teach</div><div class="chips">${teach.length?teach.slice(0,6).map(s=>`<span class="chip">${escapeHTML(s)}</span>`).join(""):'<span class="small muted">Not added yet</span>'}</div>
       <div class="skill-label">Wants to learn</div><div class="chips">${learn.length?learn.slice(0,5).map(s=>`<span class="chip learn">${escapeHTML(s)}</span>`).join(""):'<span class="small muted">Not added yet</span>'}</div>
-      <div class="student-actions"><button class="btn btn-primary" data-request-to="${escapeHTML(p.uid)}" ${!currentUser?"":" "}>Send request</button><button class="btn btn-outline" data-view="login" ${currentUser?'data-profile-id="'+escapeHTML(p.uid)+'"':''}>View</button></div>
+      <div class="student-actions"><button class="btn btn-primary" data-request-to="${escapeHTML(p.uid)}">Send request</button><button class="btn btn-outline" data-student-view="${escapeHTML(p.uid)}">View</button></div>
     </article>`;
   }).join("");
   grid.querySelectorAll("[data-request-to]").forEach(btn=>btn.addEventListener("click",()=>sendRequest(btn.dataset.requestTo,btn)));
-  grid.querySelectorAll("[data-profile-id]").forEach(btn=>btn.addEventListener("click",()=>showStudentDetails(btn.dataset.profileId)));
+  grid.querySelectorAll("[data-student-view]").forEach(btn=>btn.addEventListener("click",()=>{
+    if(currentUser)showStudentDetails(btn.dataset.studentView);
+    else navigate("login");
+  }));
 }
 $("#student-search").addEventListener("input",()=>renderStudentCards(cachedStudents));
 $("#skill-filter").addEventListener("change",()=>renderStudentCards(cachedStudents));
